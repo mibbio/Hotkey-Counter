@@ -15,7 +15,7 @@
     <Media Id="1" Cabinet="Setup.cab" EmbedCab="yes" />
     
     <Condition Message="!(loc.WindowVersionErrorMessage)">
-      VersionNT = 601
+      VersionNT >= 601
     </Condition>
 
     <PropertyRef Id="WIX_IS_NETFRAMEWORK_461_OR_LATER_INSTALLED"/>
