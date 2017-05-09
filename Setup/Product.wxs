@@ -108,7 +108,7 @@
 
           <Directory Id="PlatformFiles" Name="$(var.Platform)">
             <Component Id="SQLite.Interop" Guid="{FBEDA0DD-FC3A-4CF6-B0DC-060624A6C612}">
-              <File Id="SQLite.Interop" Source="$(var.KeyCounter.TargetDir)x64\SQLite.Interop.dll" />
+              <File Id="SQLite.Interop" Source="$(var.KeyCounter.TargetDir)$(var.Platform)\SQLite.Interop.dll" />
             </Component>
           </Directory>
 
