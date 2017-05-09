@@ -25,7 +25,7 @@
 
     <Property Id="WixShellExecTarget" Value="[#Executable]" />
     <CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
-    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch $(var.GenericProductName)" />
+    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="!(loc.Launch) $(var.GenericProductName)" />
     
     <WixVariable Id="WixUILicenseRtf" Value="license.rtf" />
 

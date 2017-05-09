@@ -7,5 +7,6 @@
   <String Id="ShortcutsGroup">Verknüpfungen</String>
   <String Id="ShortcutStartmenu">Startmenü</String>
   <String Id="ShortcutDesktop">Desktop</String>
+  <String Id="Launch">Starte</String>
   <String Id="ProductLanguage">1031</String>
 </WixLocalization>

@@ -16,6 +16,9 @@
     <OutputPath>bin\$(Configuration)\$(Platform)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <Cultures>en-us;de-de</Cultures>
+    <SuppressIces>ICE69</SuppressIces>
+    <CompilerAdditionalOptions>-v</CompilerAdditionalOptions>
+    <LinkerAdditionalOptions>-v</LinkerAdditionalOptions>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
     <DefineConstants>Debug</DefineConstants>
