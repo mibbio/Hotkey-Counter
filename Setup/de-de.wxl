@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="de-de" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+  <String Id="DowngradeErrorMessage">Eine aktuellere Version von [ProductName] ist bereits installiert.</String>
+  <String Id="WindowVersionErrorMessage">[ProductName] benötigt Windows 7 oder neuer.</String>
+  <String Id="NetFxVersionErrorMessage">[ProductName] benötigt .NET Framework 4.6.1 oder neuer.</String>
+  <String Id="ProgramFilesGroup">Programdateien</String>
+  <String Id="ShortcutsGroup">Verknüpfungen</String>
+  <String Id="ShortcutStartmenu">Startmenü</String>
+  <String Id="ShortcutDesktop">Desktop</String>
+  <String Id="ProductLanguage">1031</String>
+</WixLocalization>

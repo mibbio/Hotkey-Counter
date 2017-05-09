@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+  
+  <?include $(sys.CURRENTDIR)\Variables.wxi?>
+
+  <Product Name="$(var.ProductName)" Manufacturer="$(var.Manufacturer)"
+           Id="{5FD2C266-8B1A-417C-8D12-9CAE0D6A6E55}" UpgradeCode="{1ECC254F-41D1-4499-96F8-70A336328463}"
+           Language="!(loc.ProductLanguage)" Version="1.1.0" Codepage="1252">
+    <Package Id="*" Description="$(var.ProductName)" Manufacturer="$(var.Manufacturer)"
+             InstallerVersion="500" Compressed="yes" InstallScope="perMachine"
+             SummaryCodepage="1252" />
+
+    <MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeErrorMessage)" />
+    <Media Id="1" Cabinet="Setup.cab" EmbedCab="yes" />
+    
+    <Condition Message="!(loc.WindowVersionErrorMessage)">
+      VersionNT = 601
+    </Condition>
+
+    <PropertyRef Id="WIX_IS_NETFRAMEWORK_461_OR_LATER_INSTALLED"/>
+    <Condition Message="!(loc.NetFxVersionErrorMessage)">
+      <![CDATA[Installed OR WIX_IS_NETFRAMEWORK_461_OR_LATER_INSTALLED]]>
+    </Condition>
+
+    <Property Id="WixShellExecTarget" Value="[#Executable]" />
+    <CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
+    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch $(var.GenericProductName)" />
+    
+    <WixVariable Id="WixUILicenseRtf" Value="license.rtf" />
+
+    <UI Id="WixUI_FeatureTree">
+      <TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
+      <TextStyle Id="WixUI_Font_Bigger" FaceName="Tahoma" Size="12" />
+      <TextStyle Id="WixUI_Font_Title" FaceName="Tahoma" Size="9" Bold="yes" />
+
+      <Property Id="DefaultUIFont" Value="WixUI_Font_Normal" />
+      <Property Id="WixUI_Mode" Value="FeatureTree" />
+
+      <DialogRef Id="ErrorDlg" />
+      <DialogRef Id="FatalError" />
+      <DialogRef Id="FilesInUse" />
+      <DialogRef Id="MsiRMFilesInUse" />
+      <DialogRef Id="PrepareDlg" />
+      <DialogRef Id="ProgressDlg" />
+      <DialogRef Id="ResumeDlg" />
+      <DialogRef Id="UserExit" />
+      <DialogRef Id="LicenseAgreementDlg" />
+
+      <Publish Dialog="ExitDialog" Control="Finish" Event="EndDialog" Value="Return" Order="999">1</Publish>
+      <Publish Dialog="ExitDialog" Control="Finish" Event="DoAction" Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT installed</Publish>
+
+      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="LicenseAgreementDlg">NOT Installed</Publish>
+      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg">Installed AND PATCH</Publish>
+      
+      <Publish Dialog="LicenseAgreementDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg">1</Publish>
+      <Publish Dialog="LicenseAgreementDlg" Control="Next" Event="NewDialog" Value="CustomizeDlg">1</Publish>
+
+      <Publish Dialog="CustomizeDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg" Order="1">Installed</Publish>
+      <Publish Dialog="CustomizeDlg" Control="Back" Event="NewDialog" Value="LicenseAgreementDlg" Order="2">NOT Installed</Publish>
+      <Publish Dialog="CustomizeDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="CustomizeDlg" Order="1">NOT Installed OR WixUI_InstallMode = "Change"</Publish>
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg" Order="2">Installed AND NOT PATCH</Publish>
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" Order="3">Installed AND PATCH</Publish>
+
+      <Publish Dialog="MaintenanceWelcomeDlg" Control="Next" Event="NewDialog" Value="MaintenanceTypeDlg">1</Publish>
+
+      <Publish Dialog="MaintenanceTypeDlg" Control="ChangeButton" Event="NewDialog" Value="CustomizeDlg">1</Publish>
+      <Publish Dialog="MaintenanceTypeDlg" Control="RepairButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+      <Publish Dialog="MaintenanceTypeDlg" Control="RemoveButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+      <Publish Dialog="MaintenanceTypeDlg" Control="Back" Event="NewDialog" Value="MaintenanceWelcomeDlg">1</Publish>
+
+      <UIRef Id="WixUI_Common"/>
+    </UI>
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+
+      <Directory Id="$(var.PlatformProgramFilesFolder)">
+        <Directory Id="INSTALLFOLDER" Name="Hotkey Counter">
+          <Component Id="Executable" Guid="{B96B38B3-A1FB-4F8C-A586-B61C825749A3}">
+            <File Id="Executable" Source="$(var.KeyCounter.TargetPath)" KeyPath="yes" />
+          </Component>
+          <Component Id="Executable.config" Guid="{BC09A202-71C7-4789-B067-27339691AD43}">
+            <File Id="Executable.config" Source="$(var.KeyCounter.TargetPath).config" />
+          </Component>
+          <Component Id="GlobalHotKey" Guid="{B0C07173-F279-4188-B766-2395D95BE6B0}">
+            <File Id="GlobalHotKey" Source="$(var.KeyCounter.TargetDir)GlobalHotKey.dll" />
+          </Component>
+          <Component Id="MahApps.Metro" Guid="{9812D1BA-F097-471D-89EE-93525D237ADD}">
+            <File Id="MahApps.Metro" Source="$(var.KeyCounter.TargetDir)MahApps.Metro.dll" />
+          </Component>
+          <Component Id="MahApps.Metro.IconPacks" Guid="{0B73210A-C1DE-4312-B514-8261C044F7DD}">
+            <File Id="MahApps.Metro.IconPacks" Source="$(var.KeyCounter.TargetDir)MahApps.Metro.IconPacks.dll" />
+          </Component>
+          <Component Id="System.Data.SQLite" Guid="{A1B14466-E594-4554-B2CC-2413497DDE75}">
+            <File Id="System.Data.SQLite" Source="$(var.KeyCounter.TargetDir)System.Data.SQLite.dll" />
+          </Component>
+          <Component Id="System.Windows.Interactivity" Guid="{E9913DF2-0A0E-4890-AD59-EBAC6B6A425A}">
+            <File Id="System.Windows.Interactivity" Source="$(var.KeyCounter.TargetDir)System.Windows.Interactivity.dll" />
+          </Component>
+
+          <Directory Id="ResourcesDE" Name="de">
+            <Component Id="ResourcesDE" Guid="{DAF0DF88-A3C3-4BE7-878A-4646CE4A199A}">
+              <File Id="ResourcesDE" Source="$(var.KeyCounter.TargetDir)de\Hotkey Counter.resources.dll" />
+            </Component>
+          </Directory>
+
+          <Directory Id="PlatformFiles" Name="$(var.Platform)">
+            <Component Id="SQLite.Interop" Guid="{FBEDA0DD-FC3A-4CF6-B0DC-060624A6C612}">
+              <File Id="SQLite.Interop" Source="$(var.KeyCounter.TargetDir)x64\SQLite.Interop.dll" />
+            </Component>
+          </Directory>
+
+        </Directory>
+      </Directory>
+
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="HotkeyCounterMenu" Name="$(var.GenericProductName)">
+          <Component Id="StartmenuShortcut" Guid="{4B27CBFF-6B0B-43D6-BCB7-5E43C7874992}">
+            <Shortcut Id="StartmenuShortcut" Name="$(var.GenericProductName)" Target="[#Executable]" WorkingDirectory="APPROOTDIR" />
+            <Shortcut Id="UninstallShortcut" Name="Uninstall $(var.GenericProductName)" Target="[SystemFolder]msiexec.exe" Arguments="/x [ProductCode]" />
+            <RemoveFolder Id="HotkeyCounterMenu" On="uninstall"/>
+            <RegistryValue Root="HKCU" Key="Software\$(var.Manufacturer)\$(var.GenericProductName)" Name="startmenu" Type="integer" Value="1" KeyPath="yes" />
+          </Component>
+        </Directory>
+      </Directory>
+
+      <Directory Id="DesktopFolder">
+        <Component Id="DesktopShortcut" Guid="{1E20FC45-49F0-42AC-955A-A469F4D24C1A}">
+          <Shortcut Id="DesktopShortcut" Name="$(var.GenericProductName)" Target="[#Executable]" WorkingDirectory="APPROOTDIR" />
+          <RegistryValue Root="HKCU" Key="Software\$(var.Manufacturer)\$(var.GenericProductName)" Name="desktop" Type="integer" Value="1" KeyPath="yes" />
+        </Component>
+      </Directory>
+
+    </Directory>
+
+    <Feature Id="ProgramFiles" Title="!(loc.ProgramFilesGroup)" Absent="disallow" AllowAdvertise="no">
+      <ComponentRef Id="Executable" />
+      <ComponentRef Id="Executable.config" />
+      <ComponentRef Id="GlobalHotKey" />
+      <ComponentRef Id="MahApps.Metro" />
+      <ComponentRef Id="MahApps.Metro.IconPacks" />
+      <ComponentRef Id="System.Data.SQLite" />
+      <ComponentRef Id="System.Windows.Interactivity" />
+      <ComponentRef Id="SQLite.Interop" />
+      <!-- locale resources -->
+      <ComponentRef Id="ResourcesDE" />
+    </Feature>
+    <Feature Id="Shortcuts" Title="!(loc.ShortcutsGroup)" AllowAdvertise="no">
+      <Feature Id="StartmenuShortcut" Title="!(loc.ShortcutStartmenu)" AllowAdvertise="no">
+        <ComponentRef Id="StartmenuShortcut" />
+      </Feature>
+      <Feature Id="DesktopShortcut" Title="!(loc.ShortcutDesktop)" AllowAdvertise="no">
+        <ComponentRef Id="DesktopShortcut" />
+      </Feature>
+    </Feature>
+
+
+  </Product>
+</Wix>

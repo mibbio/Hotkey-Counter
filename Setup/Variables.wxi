@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+	<?if $(var.Platform) = x64 ?>
+    <?define ProductName = "Hotkey Counter (64bit)" ?>
+    <?define Win64 = "yes" ?>
+    <?define PlatformProgramFilesFolder = "ProgramFiles64Folder" ?>
+  <?else ?>
+    <?define ProductName = "Hotkey Counter" ?>
+    <?define Win64 = "no" ?>
+    <?define PlatformProgramFilesFolder = "ProgramFilesFolder" ?>
+  <?endif ?>
+  
+  <?define Manufacturer = "mibbio" ?>
+  <?define GenericProductName = "Hotkey Counter"?>
+</Include>
