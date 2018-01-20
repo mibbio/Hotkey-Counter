@@ -93,6 +93,21 @@
                     <TextBox Grid.Row="1" Grid.Column="1" Margin="0 4" TextAlignment="Center" MaxLength="7" MaxLines="1" Text="{Binding BgColor}" />
                 </Grid>
             </GroupBox>
+            <GroupBox Header="{x:Static resx:Resources.TXT_HEADING_FONT}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <ComboBox x:Name="FontSelect" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Margin="0 4" IsReadOnly="True"/>
+                    <ComboBox x:Name="StyleSelect" Grid.Column="0" Grid.Row="1" Margin="0 0 4 0" IsReadOnly="True"/>
+                    <ComboBox x:Name="SizeSelect" Grid.Column="1" Grid.Row="1" IsReadOnly="True"/>
+                </Grid>
+            </GroupBox>
             <Button x:Name="btnToggleOverlay" Click="btnToggleOverlay_Click" Margin="16" Content="{x:Static resx:Resources.TXT_BUTTON_OVERLAY_SHOW}" />
         </StackPanel>
     </DockPanel>

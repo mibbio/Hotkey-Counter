@@ -144,6 +144,9 @@
   <data name="TXT_HEADING_COLOR" xml:space="preserve">
     <value>Color</value>
   </data>
+  <data name="TXT_HEADING_FONT" xml:space="preserve">
+    <value>Font Settings</value>
+  </data>
   <data name="TXT_HINT_EDIT" xml:space="preserve">
     <value>Edit count by double click on it</value>
   </data>

@@ -144,6 +144,9 @@
   <data name="TXT_HEADING_COLOR" xml:space="preserve">
     <value>Farbe</value>
   </data>
+  <data name="TXT_HEADING_FONT" xml:space="preserve">
+    <value>Schriftart</value>
+  </data>
   <data name="TXT_HINT_EDIT" xml:space="preserve">
     <value>Doppelklick auf Zähler zum Bearbeiten</value>
   </data>
