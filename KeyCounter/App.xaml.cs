@@ -28,6 +28,7 @@ namespace KeyCounter
         }
 
         private static bool dbInitDone = false;
+        private static bool dbMigrateDone = false;
         private static SQLiteConnection _dbConnection =
             new SQLiteConnection("Data Source=" + Path.Combine(AppPath, "Counter.db") + "");
 
@@ -40,7 +41,16 @@ namespace KeyCounter
                 if (!dbInitDone) {
                     SQLiteCommand command = new SQLiteCommand(_dbConnection);
 
-                    command.CommandText = "CREATE TABLE IF NOT EXISTS colors (name TEXT PRIMARY KEY ON CONFLICT REPLACE, value TEXT)";
+                    if (!dbMigrateDone) {
+                        command.CommandText = "SELECT name FROM sqlite_master WHERE type='table' AND name='colors'";
+                        if (command.ExecuteScalar() != null) {
+                            command.CommandText = "ALTER TABLE colors RENAME TO settings";
+                            command.ExecuteNonQuery();
+                        }
+                        dbMigrateDone = true;
+                    }
+
+                    command.CommandText = "CREATE TABLE IF NOT EXISTS settings (name TEXT PRIMARY KEY ON CONFLICT REPLACE, value TEXT)";
                     command.ExecuteNonQuery();
 
                     command.CommandText = "CREATE TABLE IF NOT EXISTS counter (guid TEXT PRIMARY KEY ON CONFLICT REPLACE, name TEXT, key INTEGER, modifier INTEGER, current INTEGER, total INTEGER)";
