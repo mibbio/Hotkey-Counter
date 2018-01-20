@@ -42,8 +42,8 @@ namespace KeyCounter
         }
 
         private void counterListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
-            if (sender is ListBox) {
-                editFlyout.DataContext = ((ListBox)sender).SelectedItem;
+            if (sender is ListBox lb && lb.SelectedIndex >= 0) {
+                editFlyout.DataContext = lb.SelectedItem;
                 editFlyout.IsOpen = true;
             }
         }
