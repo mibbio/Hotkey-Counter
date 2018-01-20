@@ -1,13 +1,11 @@
 ﻿using GlobalHotKey;
 using System;
 using System.ComponentModel;
-using System.Data.SQLite;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Input;
 
-namespace KeyCounter
-{
+namespace KeyCounter {
     class CounterData : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
