@@ -121,7 +121,7 @@
     <value>Hotkey Counter</value>
   </data>
   <data name="TXT_BUTTON_ADD" xml:space="preserve">
-    <value>Zählen hinzufügen</value>
+    <value>Zähler hinzufügen</value>
   </data>
   <data name="TXT_BUTTON_DELETE" xml:space="preserve">
     <value>Löschen</value>
