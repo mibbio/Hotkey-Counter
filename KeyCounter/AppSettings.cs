@@ -19,7 +19,7 @@ namespace KeyCounter
         public string TextColor {
             get {
                 if (_textColor.Equals("")) {
-                    SQLiteCommand command = new SQLiteCommand("SELECT value FROM Colors WHERE name = @Name", App.DbConnection);
+                    SQLiteCommand command = new SQLiteCommand("SELECT value FROM settings WHERE name = @Name", App.DbConnection);
                     command.Parameters.Add("@Name", System.Data.DbType.String);
                     command.Parameters["@Name"].Value = "textColor";
                     SQLiteDataReader r = command.ExecuteReader();
@@ -32,7 +32,7 @@ namespace KeyCounter
             set {
                 if (Regex.IsMatch(value, colorPattern, RegexOptions.IgnoreCase)) {
                     _textColor = value.StartsWith("#") ? value : "#" + value;
-                    SQLiteCommand command = new SQLiteCommand("INSERT INTO colors (name, value) VALUES (@Name, @Value)", App.DbConnection);
+                    SQLiteCommand command = new SQLiteCommand("INSERT INTO settings (name, value) VALUES (@Name, @Value)", App.DbConnection);
                     command.Parameters.Add("@Name", System.Data.DbType.String);
                     command.Parameters.Add("@Value", System.Data.DbType.String);
                     command.Parameters["@Name"].Value = "textColor";
@@ -48,7 +48,7 @@ namespace KeyCounter
         public string BgColor {
             get {
                 if (_bgColor.Equals("")) {
-                    SQLiteCommand command = new SQLiteCommand("SELECT value FROM colors WHERE name = @Name", App.DbConnection);
+                    SQLiteCommand command = new SQLiteCommand("SELECT value FROM settings WHERE name = @Name", App.DbConnection);
                     command.Parameters.Add("@Name", System.Data.DbType.String);
                     command.Parameters["@Name"].Value = "bgColor";
                     SQLiteDataReader r = command.ExecuteReader();
@@ -61,7 +61,7 @@ namespace KeyCounter
             set {
                 if (Regex.IsMatch(value, colorPattern, RegexOptions.IgnoreCase)) {
                     _bgColor = value.StartsWith("#") ? value : "#" + value;
-                    SQLiteCommand command = new SQLiteCommand("INSERT INTO colors (name, value) VALUES (@Name, @Value)", App.DbConnection);
+                    SQLiteCommand command = new SQLiteCommand("INSERT INTO settings (name, value) VALUES (@Name, @Value)", App.DbConnection);
                     command.Parameters.Add("@Name", System.Data.DbType.String);
                     command.Parameters.Add("@Value", System.Data.DbType.String);
                     command.Parameters["@Name"].Value = "bgColor";
