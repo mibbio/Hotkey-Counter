@@ -2,11 +2,24 @@
 using System.Data.SQLite;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
+using System.Windows;
+using System.Windows.Media;
 
 namespace KeyCounter {
     public class AppSettings
     {
         private static string colorPattern = @"^#?[a-f0-9]{6}$";
+
+        // Default / Fallback values
+        public static readonly Vector FontSizes = new Vector(20, 72);
+
+        static class Fallback {
+            public static readonly string textColor = "#FFFFFF";
+            public static readonly string bgColor = "#FF00FF";
+            public static readonly string fontName = "Arial";
+            public static readonly FamilyTypeface fontStyle = new FamilyTypeface() { Style = FontStyles.Normal, Weight = FontWeights.Normal };
+            public static readonly double fontSize = FontSizes.X;
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null) {
@@ -17,7 +30,7 @@ namespace KeyCounter {
         public string TextColor {
             get {
                 if (_textColor.Equals(string.Empty)) {
-                    _textColor = "#FFFFFF";
+                    _textColor = Fallback.textColor;
                     using (SQLiteCommand command = new SQLiteCommand("SELECT value FROM settings WHERE name = @Name", App.DbConnection)) {
                         command.Parameters.Add("@Name", System.Data.DbType.String);
                         command.Parameters["@Name"].Value = "textColor";
@@ -46,7 +59,7 @@ namespace KeyCounter {
         public string BgColor {
             get {
                 if (_bgColor.Equals(string.Empty)) {
-                    _bgColor = "#FF00FF";
+                    _bgColor = Fallback.bgColor;
                     using (SQLiteCommand command = new SQLiteCommand("SELECT value FROM settings WHERE name = @Name", App.DbConnection)) {
                         command.Parameters.Add("@Name", System.Data.DbType.String);
                         command.Parameters["@Name"].Value = "bgColor";
