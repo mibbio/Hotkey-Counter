@@ -32,21 +32,21 @@ namespace KeyCounter
             counterListBox.ItemsSource = counterCollection;
         }
 
-        private void btnAddCounter_Click(object sender, RoutedEventArgs e) {
+        private void BtnAddCounter_Click(object sender, RoutedEventArgs e) {
             CounterData cd = new CounterData(Guid.NewGuid(), resManager.GetString("TXT_NEW_COUNTER"), 0);
             counterCollection.Add(cd);
             editFlyout.DataContext = cd;
             editFlyout.IsOpen = true;
         }
 
-        private void counterListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
+        private void CounterListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
             if (sender is ListBox lb && lb.SelectedIndex >= 0) {
                 editFlyout.DataContext = lb.SelectedItem;
                 editFlyout.IsOpen = true;
             }
         }
 
-        private void btnEditDone_Click(object sender, RoutedEventArgs e) {
+        private void BtnEditDone_Click(object sender, RoutedEventArgs e) {
             editFlyout.DataContext = null;
             editFlyout.IsOpen = false;
         }
@@ -76,7 +76,7 @@ namespace KeyCounter
         }
 
         OverlayWindow overlayWindow = new OverlayWindow();
-        private void btnToggleOverlay_Click(object sender, RoutedEventArgs e) {
+        private void BtnToggleOverlay_Click(object sender, RoutedEventArgs e) {
             if (overlayWindow.IsVisible) {
                 overlayWindow.Hide();
                 ((Button)sender).Content = resManager.GetString("TXT_BUTTON_OVERLAY_SHOW");
@@ -96,12 +96,12 @@ namespace KeyCounter
             overlayWindow.Owner = GetWindow(this);
         }
 
-        private void btnDeleteCounter_Click(object sender, RoutedEventArgs e) {
+        private void BtnDeleteCounter_Click(object sender, RoutedEventArgs e) {
             CounterData cd = (CounterData)((Button)sender).DataContext;
             counterCollection.Remove(cd);
         }
 
-        private void btnResetCounter_Click(object sender, RoutedEventArgs e) {
+        private void BtnResetCounter_Click(object sender, RoutedEventArgs e) {
             CounterData cd = (CounterData)((Button)sender).DataContext;
             cd.Reset();
         }
