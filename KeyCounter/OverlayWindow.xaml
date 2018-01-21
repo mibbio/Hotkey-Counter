@@ -9,7 +9,11 @@
         Title="OverlayWindow" SizeToContent="WidthAndHeight"
         ShowInTaskbar="False" ResizeMode="NoResize" ShowTitleBar="False" ShowCloseButton="False"
         BorderThickness="0" Background="{Binding BgColor}" Foreground="{Binding TextColor}" Focusable="False" IsTabStop="False">
-    <ItemsControl x:Name="counterItems" Margin="0 20 0 0">
+    <ItemsControl x:Name="counterItems" Margin="0 20 0 0"
+                  FontFamily="{Binding FontType}"
+                  FontStyle="{Binding FontStyle.Style}"
+                  FontWeight="{Binding FontStyle.Weight}"
+                  FontSize="{Binding TextSize}">
         <ItemsControl.ItemTemplate>
             <DataTemplate>
                 <Grid Margin="4">
@@ -17,10 +21,10 @@
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="{Binding Name}" FontSize="28" VerticalAlignment="Center" Margin="0 0 30 0"/>
-                    <TextBlock Grid.Column="1" Text="{Binding SessionCount, NotifyOnSourceUpdated=True}" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                    <TextBlock Grid.Column="0" Text="{Binding Name}" VerticalAlignment="Center" Margin="0 0 30 0"/>
+                    <TextBlock Grid.Column="1" Text="{Binding SessionCount, NotifyOnSourceUpdated=True}" VerticalAlignment="Center" HorizontalAlignment="Right" />
                 </Grid>
             </DataTemplate>
         </ItemsControl.ItemTemplate>
-        </ItemsControl>
+    </ItemsControl>
 </Controls:MetroWindow>
