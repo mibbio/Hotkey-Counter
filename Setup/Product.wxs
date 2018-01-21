@@ -5,8 +5,8 @@
   <?include $(sys.CURRENTDIR)\Variables.wxi?>
 
   <Product Name="$(var.ProductName)" Manufacturer="$(var.Manufacturer)"
-           Id="{5FD2C266-8B1A-417C-8D12-9CAE0D6A6E55}" UpgradeCode="{1ECC254F-41D1-4499-96F8-70A336328463}"
-           Language="!(loc.ProductLanguage)" Version="1.1.0" Codepage="1252">
+           Id="{BC69C681-437E-4E43-89EE-7CC1CBAEE26E}" UpgradeCode="{1ECC254F-41D1-4499-96F8-70A336328463}"
+           Language="!(loc.ProductLanguage)" Version="1.2.0" Codepage="1252">
     <Package Id="*" Description="$(var.ProductName)" Manufacturer="$(var.Manufacturer)"
              InstallerVersion="500" Compressed="yes" InstallScope="perMachine"
              SummaryCodepage="1252" />
