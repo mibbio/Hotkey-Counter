@@ -9,14 +9,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace KeyCounter
-{
+namespace KeyCounter {
 
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
-    {
+    public partial class App : Application {
         public static string AppPath {
             get {
                 string path = Path.Combine(
@@ -45,7 +43,11 @@ namespace KeyCounter
                         command.CommandText = "SELECT name FROM sqlite_master WHERE type='table' AND name='colors'";
                         if (command.ExecuteScalar() != null) {
                             command.CommandText = "ALTER TABLE colors RENAME TO settings";
-                            command.ExecuteNonQuery();
+                            try {
+                                command.ExecuteNonQuery();
+                            }
+                            catch (Exception) { }
+
                         }
                         dbMigrateDone = true;
                     }
