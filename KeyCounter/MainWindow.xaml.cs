@@ -4,11 +4,10 @@ using System.Windows.Input;
 using System.ComponentModel;
 using System;
 using System.Resources;
+using System.Collections.Generic;
 
-namespace KeyCounter
-{
-    public partial class MainWindow
-    {
+namespace KeyCounter {
+    public partial class MainWindow {
         private AppSettings settings = new AppSettings();
         private static ResourceManager resManager = Properties.Resources.ResourceManager;
 
@@ -19,6 +18,12 @@ namespace KeyCounter
 
             settingsUI.DataContext = settings;
             overlayWindow.DataContext = settings;
+
+            List<double> validSizes = new List<double>();
+            for (double size = AppSettings.FontSizes.X; size <= AppSettings.FontSizes.Y; size += 2) {
+                validSizes.Add(size);
+            }
+            SizeSelect.ItemsSource = validSizes;
         }
 
         CounterCollection counterCollection;

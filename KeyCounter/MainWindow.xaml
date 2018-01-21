@@ -11,6 +11,9 @@
         Title="{x:Static resx:Resources.TXT_APP_TITLE}" Height="350" Width="525" ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen"
         RightWindowCommandsOverlayBehavior="HiddenTitleBar" Closing="MetroWindow_Closing" Activated="MetroWindow_Activated">
+    <Controls:MetroWindow.Resources>
+        <CollectionViewSource x:Key="StyleSource" Source="{Binding SelectedItem.FamilyTypefaces, ElementName=FontSelect}"/>
+    </Controls:MetroWindow.Resources>
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
             <Button x:Name="btnAddCounter" Click="BtnAddCounter_Click">
@@ -105,22 +108,33 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <ComboBox x:Name="FontSelect" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Margin="0 4" IsReadOnly="True" MaxDropDownHeight="150">
+                    <ComboBox x:Name="FontSelect" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Margin="0 4" IsReadOnly="True" MaxDropDownHeight="150"
+                              SelectedValue="{Binding FontType}"
+                              ItemsSource="{x:Static Fonts.SystemFontFamilies}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock/>
+                                <TextBlock Text="{Binding Source}" FontFamily="{Binding Source}"/>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <ComboBox x:Name="StyleSelect" Grid.Column="0" Grid.Row="1" Margin="0 0 4 0" IsReadOnly="True" MaxDropDownHeight="150">
+                    <ComboBox x:Name="StyleSelect" Grid.Column="0" Grid.Row="1" Margin="0 0 4 0" IsReadOnly="True" MaxDropDownHeight="150"
+                              SelectedValue="{Binding FontStyle}"
+                              ItemsSource="{Binding Source={StaticResource StyleSource}}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock>
+                                <TextBlock FontFamily="{Binding SelectedItem, ElementName=FontSelect}" FontStyle="{Binding Style}" FontWeight="{Binding Weight}">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} {1}">
+                                            <Binding Path="Style"/>
+                                            <Binding Path="Weight"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
                                 </TextBlock>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <ComboBox x:Name="SizeSelect" Grid.Column="1" Grid.Row="1" IsReadOnly="True" MaxDropDownHeight="150"/>
+                    <ComboBox x:Name="SizeSelect" Grid.Column="1" Grid.Row="1" IsReadOnly="True" MaxDropDownHeight="150"
+                              SelectedItem="{Binding TextSize}"/>
                 </Grid>
             </GroupBox>
 
