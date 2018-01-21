@@ -6,11 +6,7 @@ using System;
 using System.Resources;
 
 namespace KeyCounter
-// andrewG85
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow
     {
         private AppSettings settings = new AppSettings();
